@@ -1,0 +1,95 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Stargate Command</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+
+  <h1>Lights</h1>
+  <p>
+    <div class="controls">
+      <div class="control" onclick="ON();">
+        Rainbow
+      </div>
+      <div class="control" onclick="OFF();">
+        Ramps
+      </div>
+      <div class="control" onclick="AUTO();">
+        Chevrons
+      </div>
+    </div>
+  </p>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js">
+  </script>
+  <script type="text/javascript">
+
+    let dialSeq = [];
+    let enableDialing = true;
+    let enableRainbow = true;
+    let enableRamp = true;
+    let enableChevrons = true;
+    let checkDialingInt = 0;
+
+    var active = false;
+
+    $('.control').on('click', function(){
+      if(active == false) {
+        $(this).css('background-color', 'red');
+        active = true;
+      } else {
+        $(this).css('background-color', 'black');
+        active = false;
+      }
+    });
+
+    function ON() {
+
+      if (enableRainbow) {
+        enableRainbow = false;
+        $.post({
+          url: 'http://192.168.4.112/ON'
+        });
+      } else {
+        enableRainbow = true;
+        $.post({
+          url: 'http://192.168.4.112/OFF'
+        });
+      }
+    }
+
+    function OFF() {
+      if (enableRamp) {
+        enableRamp = false;
+        $.post({
+          url: 'http://192.168.4.112/OFF'
+        });
+      } else {
+        enableRamp = true;
+        $.post({
+          url: 'http://192.168.4.112/ON'
+        });
+      }
+    }
+
+    function AUTO() {
+      if (enableChevrons) {
+        enableChevrons = false;
+        $.post({
+          url: 'http://192.168.4.112/AUTO'
+        });
+      } else {
+        enableChevrons = true;
+        $.post({
+          url: 'http://192.168.4.112/OFF'
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>
